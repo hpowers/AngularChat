@@ -10,7 +10,7 @@ angular.module('chatApp', [
   .config(function($routeProvider){
     $routeProvider
       .when('/', {
-        templateUrl: 'partials/partial1.html',
+        templateUrl: 'partials/chat.html',
         controller: 'Chat'
       })
       .otherwise({

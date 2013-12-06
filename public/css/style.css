@@ -1,12 +1,15 @@
-h1, p {
-  display: none;
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* username */
+.chat tr td:first-child {
+  width: 200px;
 }
 
-a {
-  color: #00B7FF;
+.chat tr td:first-child:after {
+  content: ' : ';
 }
