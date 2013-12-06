@@ -40,8 +40,13 @@ server.listen(app.get('port'), function(){
 });
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
+
+  // listen for chat messages
+  socket.on('chat', function(data) {
+    // dump to console
     console.log(data);
+    // send to any other clients attached
+    socket.broadcast.emit('chat', data);
   });
+
 });
