@@ -1,29 +1,49 @@
-console.log('welcome');
-
-// Socket.io
-var socket = io.connect('/');
-socket.on('chat', function (data) {
-  console.log(data);
-});
-setTimeout(function(){
-  socket.emit('chat', { my: 'test' });
-}, 1000);
+////////////////////////////////////////////////////////////////////////////////
+// Chattr - Angular chat w/ socket.io
+////////////////////////////////////////////////////////////////////////////////
 
 angular.module('chatApp', [])
-  .controller('Chat', function($scope){
-    $scope.chat = [
-      {text: 'msg 1'},
-      {text: 'msg 2'},
-      {text: 'msg 3'},
-    ];
+  // I stole this factory from
+  // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
+  .factory('socket', function ($rootScope) {
+    var socket = io.connect();
+    return {
+      on: function (eventName, callback) {
+        socket.on(eventName, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function (eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        });
+      }
+    };
+  })
+  .controller('Chat', function($scope, socket){
+
+    $scope.chat = [];
+
+    socket.on('chat', function (data) {
+      console.log(data);
+      $scope.chat.push(data);
+    });
+
     $scope.talk = function(){
       $scope.chat.push({
         text: $scope.new_msg
       });
 
-      // socket.io hack
       socket.emit('chat', { text: $scope.new_msg });
-
       $scope.new_msg = '';
     };
+
   });
