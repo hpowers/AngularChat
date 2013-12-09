@@ -37,14 +37,49 @@ server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+var users = {};
+
 io.sockets.on('connection', function (socket) {
 
-  // listen for chat messages
+  // add user to list
+  users[socket.id] = 'Anonymous Coward';
+
+  // send list to user
+  socket.emit('users', {
+    users: users
+  });
+
+  // tell others about new user
+  socket.broadcast.emit('enter', {
+    id: socket.id,
+    name: users[socket.id]
+  });
+
+  // listen for chat & rebroadcast
   socket.on('chat', function(data) {
-    // dump to console
-    console.log(data);
-    // send to any other clients attached
     socket.broadcast.emit('chat', data);
   });
 
+  // listen for name change
+  socket.on('update', function(data){
+    // update the model
+    users[socket.id] = data.name;
+    // tell others
+    socket.broadcast.emit('update', {
+      id: socket.id,
+      name: data.name
+    });
+  });
+
+  // listen for disconnect
+  socket.on('disconnect', function(){
+    // tell others
+    socket.broadcast.emit('exit', {
+      id: socket.id
+    });
+    // remove the user
+    delete users[socket.id];
+  });
+
 });
+
