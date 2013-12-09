@@ -18,6 +18,12 @@ angular.module('chatApp.controllers',[])
       // console.log('socket data', data);
       $scope.chat.push(data);
       // console.log('chat', $scope.chat);
+
+      // hack to scroll down chat window
+      setTimeout(function(){
+        document.getElementsByClassName('chat')[0].scrollTop = document.getElementsByClassName('chat')[0].scrollHeight;
+      }, 200);
+
     });
 
     // receive my id and user list on connect
@@ -64,6 +70,13 @@ angular.module('chatApp.controllers',[])
         date: new Date().getTime(),
         text: $scope.new_msg
       });
+
+      // hack to scroll down chat window
+      setTimeout(function(){
+        document.getElementsByClassName('chat')[0].scrollTop = document.getElementsByClassName('chat')[0].scrollHeight;
+      }, 200);
+
+      // console.log('nothing');
 
       // reset
       $scope.new_msg = '';

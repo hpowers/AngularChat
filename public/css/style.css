@@ -1,15 +1,111 @@
-.footer {
-  border-top: 1px solid #eee;
-  margin-top: 40px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+html, body, .holder{
+  height: 100%;
 }
 
-/* username */
-.chat tr td:first-child {
-  width: 200px;
+/* Columns */
+
+  .col {
+    background: #fff;
+    height: 100%;
+    /*padding-top: 20px;*/
+  }
+
+/* Sidebar - room list / username / etc... */
+
+  .sidebar {
+    background: #1f2735;
+    color: #808390;
+    padding-top: 20px;
+  }
+
+  .sidebar .username {
+    position: absolute;
+    bottom: 10px;
+    width: calc(100% - 30px);
+    height: 45px;
+  }
+
+/* Main - chat window / chat input */
+
+  .main .chat {
+    border-left: 1px solid #dfe3e7;
+    border-top: 1px solid #dfe3e7;
+    margin-bottom: 45px;
+    /*max-height: 80%;*/
+    overflow-y: auto;
+    max-height: calc(100% - 110px);
+  }
+
+  .main .search-bar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .main .chat .col-xs-2,
+  .main .chat .col-xs-8 {
+    padding: 5px 15px;
+  }
+
+  .main .chat li {
+    border: 1px solid #dfe3e7;
+  }
+
+  .main .chat li:nth-child(2n) {
+    background: #f0f1f4;
+  }
+
+  .main .chat .name {
+    border-right: 1px solid #dfe3e7;
+    text-align: right;
+  }
+
+  .main .chat .msg {
+    /*border-bottom: 1px solid #dfe3e7;*/
+  }
+
+  .main .chat .date {
+    text-align: right;
+    /*border-bottom: 1px solid #dfe3e7;*/
+    /*border-right:  1px solid #dfe3e7;*/
+    color: #bbb;
+    text-transform: uppercase;
+  }
+
+  /* clear fix for chat message */
+  .main .chat li:before,
+  .main .chat li:after {
+      content: " "; /* 1 */
+      display: table; /* 2 */
+  }
+
+  .main .chat li:after {
+      clear: both;
+  }
+
+  .main .chat-input {
+    position: absolute;
+    bottom: 10px;
+  }
+
+  .main .chat-input .form-control {
+    height: 45px;
+  }
+
+/* User list */
+
+.users {
+  padding-top: 0;
+  border-left: solid 1px #c5c9ce;
 }
 
-.chat tr td:first-child:after {
-  content: ' : ';
+.users li {
+  border-bottom: 1px solid #dfe3e7;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.users h3 {
+  margin-top: 6px;
+  margin-bottom: 4px;
+  color: #bbb;
 }

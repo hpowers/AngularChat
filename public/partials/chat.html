@@ -1,24 +1,42 @@
+<div class="col sidebar col-xs-2">
 
-<h3 class="text-muted">Chattr - {{id}}</h3>
+  <ul class="list-unstyled room-list">
+    <li>
+      <span class="glyphicon glyphicon-home"></span> Main
+    </li>
+  </ul>
 
-<ul class="list-unstyled">
-  <li ng-repeat="msg in chat | limitTo:-5">
-    [{{msg.date | date:'h:mm' }}]
-    &lt;{{users[msg.id] || 'deprecated'}}&gt;
-    {{msg.text}}
-  </li>
-</ul>
+  <input type="text" class="form-control input-sm username" ng-model="name">
 
-<form ng-submit="talk()" ng-show="id">
+</div>
+<div class="col main col-xs-8">
 
-  <input type="text" ng-model="name"> :&nbsp;
-  <input type="text" ng-model="new_msg" autofocus="autofocus">
-  <button class="btn btn-primary">SEND</button>
+  <div class="form-group search-bar">
+    <input type="search" class="form-control" placeholder="Search" ng-model="search">
+  </div>
 
-</form>
+  <ul class="list-unstyled chat">
+    <li ng-repeat="msg in chat | limitTo:-300 | filter:search">
+      <span class="col-xs-2 name">{{users[msg.id] || 'deprecated'}}</span>
+      <span class="col-xs-8 msg">{{msg.text}}</span>
+      <span class="col-xs-2 date">{{msg.date | date:'h:mm' }}</span>
+    </li>
+  </ul>
 
-<h3>Users ({{userCount}})</h3>
+  <form ng-submit="talk()" ng-show="id">
+    <div class="input-group chat-input">
+      <input type="text" class="form-control" ng-model="new_msg" autofocus="autofocus">
+      <span class="input-group-addon">
+        <button class="btn btn-primary btn-sm">SEND</button>
+      </span>
+    </div>
+  </form>
 
-<ul>
-  <li ng-repeat="(id, name) in users">{{name}}</li>
-</ul>
+</div>
+
+<div class="col users col-xs-2">
+  <h3>{{userCount}}</h3>
+  <ul class="list-unstyled">
+    <li ng-repeat="(id, name) in users">{{name}}</li>
+  </ul>
+</div>
