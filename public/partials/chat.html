@@ -1,17 +1,23 @@
 
-<h3 class="text-muted">Chattr ({{users.count}})</h3>
+<h3 class="text-muted">Chattr - {{id}}</h3>
 
 <table class="table table-striped chat">
   <tr ng-repeat="msg in chat | limitTo:-5">
-    <td>{{msg.username}}</td>
+    <td>{{users[msg.id]}}</td>
     <td>{{msg.text}}</td>
   </tr>
 </table>
 
 <form ng-submit="talk()">
 
-  <input type="text" ng-model="username"> :&nbsp;
+  <input type="text" ng-model="name"> :&nbsp;
   <input type="text" ng-model="new_msg" autofocus="autofocus">
   <button class="btn btn-primary">SEND</button>
 
 </form>
+
+<h3>Users:</h3>
+
+<ul>
+  <li ng-repeat="(id, name) in users">{{name}}</li>
+</ul>

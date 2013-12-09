@@ -44,20 +44,27 @@ io.sockets.on('connection', function (socket) {
   // add user to list
   users[socket.id] = 'Anonymous Coward';
 
-  // send list to user
-  socket.emit('users', {
+  // send user their id and list of users
+  socket.emit('init', {
+    id: socket.id,
     users: users
   });
 
   // tell others about new user
-  socket.broadcast.emit('enter', {
-    id: socket.id,
-    name: users[socket.id]
+  socket.broadcast.emit('update', {
+    type: 'new user',
+    packet: {
+      id: socket.id,
+      name: users[socket.id]
+    }
   });
 
-  // listen for chat & rebroadcast
+  // listen for chat & rebroadcast w/ ID
   socket.on('chat', function(data) {
-    socket.broadcast.emit('chat', data);
+    socket.broadcast.emit('chat', {
+      id: socket.id,
+      text: data.text
+    });
   });
 
   // listen for name change
@@ -66,16 +73,22 @@ io.sockets.on('connection', function (socket) {
     users[socket.id] = data.name;
     // tell others
     socket.broadcast.emit('update', {
-      id: socket.id,
-      name: data.name
+      type: 'name change',
+      packet: {
+        id: socket.id,
+        name: data.name
+      }
     });
   });
 
   // listen for disconnect
   socket.on('disconnect', function(){
     // tell others
-    socket.broadcast.emit('exit', {
-      id: socket.id
+    socket.broadcast.emit('update', {
+      type: 'user leave',
+      packet: {
+        id: socket.id
+      }
     });
     // remove the user
     delete users[socket.id];

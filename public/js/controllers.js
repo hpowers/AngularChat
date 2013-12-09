@@ -5,31 +5,76 @@
 angular.module('chatApp.controllers',[])
   .controller('Chat', function($scope, socket){
     $scope.chat = [];
-    $scope.username = "Anonymous Coward";
+    $scope.users = {};
+    $scope.name = "Anonymous Coward";
 
     $scope.users = {
       count: 1,
-      names: [$scope.username]
+      names: [$scope.name]
     };
 
+    // receive a message
     socket.on('chat', function (data) {
-      console.log('socket data', data);
+      // console.log('socket data', data);
       $scope.chat.push(data);
-      console.log('chat', $scope.chat);
+      // console.log('chat', $scope.chat);
     });
 
-    // socket.on('users', function(data){
-      // $scope.users = data;
-      // console.log(data);
-    // });
+    // receive my id and user list on connect
+    socket.on('init', function(data){
+      $scope.id = data.id;
+      $scope.users = data.users;
+      // console.log(data.users);
+    });
 
+    // receive updates
+    socket.on('update', function(data){
+      // console.log(data);
+
+      switch (data.type){
+        case 'name change':
+          $scope.users[data.packet.id] = data.packet.name;
+          break;
+
+        case 'user leave':
+          delete $scope.users[data.packet.id];
+          break;
+
+        case 'new user':
+          $scope.users[data.packet.id] = data.packet.name;
+          break;
+      }
+    });
+
+    // send a message
     $scope.talk = function(){
-      var msgIndex = $scope.chat.push({
-        username: $scope.username,
+
+      // broadcast
+      socket.emit('chat', {
         text: $scope.new_msg
       });
 
-      socket.emit('chat', $scope.chat[msgIndex-1]);
+      // local echo
+      $scope.chat.push({
+        id: $scope.id,
+        text: $scope.new_msg
+      });
+
+      // reset
       $scope.new_msg = '';
     };
+
+    // watch for name changes
+    $scope.$watch('name', function(){
+
+      // tell the server
+      socket.emit('update', {
+        name: $scope.name
+      });
+
+      // update local
+      $scope.users[$scope.id] = $scope.name;
+
+    });
+
   });
