@@ -61,8 +61,12 @@ io.sockets.on('connection', function (socket) {
 
   // listen for chat & rebroadcast w/ ID
   socket.on('chat', function(data) {
+    // get a timestamp
+    var date = new Date().getTime();
+
     socket.broadcast.emit('chat', {
       id: socket.id,
+      date: date,
       text: data.text
     });
   });

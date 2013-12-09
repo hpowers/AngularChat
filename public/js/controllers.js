@@ -5,7 +5,7 @@
 angular.module('chatApp.controllers',[])
   .controller('Chat', function($scope, socket){
     $scope.chat = [];
-    $scope.users = {};
+    // $scope.users = {};
     $scope.name = "Anonymous Coward";
 
     $scope.users = {
@@ -24,6 +24,8 @@ angular.module('chatApp.controllers',[])
     socket.on('init', function(data){
       $scope.id = data.id;
       $scope.users = data.users;
+      $scope.userCount = Object.keys(data.users).length;
+
       // console.log(data.users);
     });
 
@@ -38,10 +40,12 @@ angular.module('chatApp.controllers',[])
 
         case 'user leave':
           delete $scope.users[data.packet.id];
+          $scope.userCount--;
           break;
 
         case 'new user':
           $scope.users[data.packet.id] = data.packet.name;
+          $scope.userCount++;
           break;
       }
     });
@@ -57,6 +61,7 @@ angular.module('chatApp.controllers',[])
       // local echo
       $scope.chat.push({
         id: $scope.id,
+        date: new Date().getTime(),
         text: $scope.new_msg
       });
 
