@@ -3,9 +3,12 @@
 /* Services */
 
 angular.module('chatApp.services',[])
-  // I stole this factory from
-  // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
-  .factory('socket', function ($rootScope) {
+
+  .factory('Socket', function ($rootScope) {
+
+    // I stole this factory from
+    // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
+
     var socket = io.connect();
     return {
       on: function (eventName, callback) {
@@ -30,11 +33,8 @@ angular.module('chatApp.services',[])
   })
   .factory('Insult', function(){
 
-    // var part1 = [
-    //   "artless",
-    //   "bawdy",
-    //   "beslubbering",
-    //   "bootless"];
+    // words stolen from
+    // http://everything2.com/title/random+insult+generator
 
     var part1 = [
       "artless",

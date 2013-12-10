@@ -3,20 +3,32 @@
 /* Controllers */
 
 angular.module('chatApp.controllers',[])
-  .controller('Chat', function($scope, socket, Insult){
-    $scope.chat = [];
-    $scope.users = {};
+  .controller('Chat', function($scope, Socket, Insult){
+
+    // controller data
+    $scope.chat    = [];
+    $scope.users   = {};
     $scope.nameMsg = 'What is your name?';
 
-    // redefine search because names aren't on messages
+    // custom search to allow searching names and message text
+    // messages don't have names, they have id's that you can look
+    // up in the users {} - so simply searching chat [] won't cut it
     $scope.search = function (msg) {
-      // figure out the name
-      var name = ($scope.users[msg.id] || 'deprecated').toLowerCase();
-      // chheck the name and the text for matches
-      return !!((name.indexOf(($scope.query || '').toLowerCase()) !== -1 || msg.text.toLowerCase().indexOf(($scope.query || '').toLowerCase()) !== -1));
+
+      var query   = ($scope.query || '').toLowerCase();
+
+      var name    = ($scope.users[msg.id] || 'deprecated').toLowerCase();
+      var hasName = (name.indexOf(query) !== -1);
+
+      var text    = msg.text.toLowerCase();
+      var hasText = (text.indexOf(query) !== -1);
+
+      return (hasName || hasText);
+
     };
 
-    $scope.mind = function(){
+    $scope.congratulations = function(){
+      // demo animated gif support in response to finding a hidden feature
       $scope.new_msg = 'http://i.imgur.com/SdP4oYu.gif';
       $scope.talk();
     };
@@ -47,8 +59,8 @@ angular.module('chatApp.controllers',[])
     $scope.name = "Anonymous Coward";
 
     // receive a message
-    socket.on('chat', function (data) {
-      // console.log('socket data', data);
+    Socket.on('chat', function (data) {
+      // console.log('Socket data', data);
       $scope.chat.push(data);
       // console.log('chat', $scope.chat);
 
@@ -60,7 +72,7 @@ angular.module('chatApp.controllers',[])
     });
 
     // receive my id and user list on connect
-    socket.on('init', function(data){
+    Socket.on('init', function(data){
 
       $scope.id = data.id;
       $scope.users = data.users;
@@ -69,7 +81,7 @@ angular.module('chatApp.controllers',[])
     });
 
     // receive updates
-    socket.on('update', function(data){
+    Socket.on('update', function(data){
       // console.log(data);
 
       switch (data.type){
@@ -110,7 +122,7 @@ angular.module('chatApp.controllers',[])
       $scope.new_msg = $scope.new_msg || Insult();
 
       // broadcast
-      socket.emit('chat', {
+      Socket.emit('chat', {
         text: $scope.new_msg
       });
 
@@ -143,7 +155,7 @@ angular.module('chatApp.controllers',[])
       }
 
       // tell the server
-      socket.emit('update', {
+      Socket.emit('update', {
         name: $scope.name || 'Anonymous Coward'
       });
 

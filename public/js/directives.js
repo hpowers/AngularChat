@@ -2,14 +2,8 @@
 
 /* Directives */
 
-// angular.module('myApp.directives', []).
-//   directive('appVersion', ['version', function(version) {
-//     return function(scope, elm, attrs) {
-//       elm.text(version);
-//     };
-//   }]);
-
 angular.module('chatApp.directives',[])
+  // format a chat msg to be either text or an embedded image
   .directive('formatMsg', function(){
     return {
       restrict: 'E',
@@ -20,17 +14,14 @@ angular.module('chatApp.directives',[])
       },
       link: function(scope, element, attrs){
 
-        // console.log('msg',scope.msg);
-
         // try to extract an image
         var imgUrl = scope.msg.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]).(?:jpg|gif|png)/gi);
 
-        // console.log('imgUrl', imgUrl);
-
-        // if we found one, replace content with message
+        // if found, replace content with message
         if (imgUrl) {
           element.replaceWith('<img src="' + imgUrl[0] + '">');
         }
+        // otherwise just use the template
       }
     };
   });
