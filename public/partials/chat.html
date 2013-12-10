@@ -2,7 +2,9 @@
 
   <ul class="list-unstyled room-list">
     <li>
-      <span class="glyphicon glyphicon-home"></span> Main
+      <a href="" ng-click="mind()">
+        <span class="glyphicon glyphicon-home"></span> Main
+      </a>
     </li>
   </ul>
 
@@ -39,14 +41,16 @@
   <ul class="list-unstyled chat">
     <li ng-repeat="msg in chat | limitTo:-300 | filter: search">
       <span class="col-xs-2 name">{{users[msg.id] || 'deprecated'}}</span>
-      <span class="col-xs-8 msg">{{msg.text}}</span>
+      <span class="col-xs-8 msg">
+        <format-msg msg="msg.text"></format-msg>
+      </span>
       <span class="col-xs-2 date">{{msg.date | date:'h:mm' }}</span>
     </li>
   </ul>
 
   <form ng-submit="talk()" ng-show="id">
     <div class="input-group chat-input">
-      <input type="text" class="form-control" id="chat" ng-model="new_msg" autofocus="autofocus" placeholder="Say something already ...">
+      <input type="text" class="form-control" id="chat" ng-model="new_msg" autofocus="autofocus" placeholder="Say something or paste a link to a pic">
       <span class="input-group-addon">
         <button class="btn btn-primary btn-sm">SEND</button>
       </span>

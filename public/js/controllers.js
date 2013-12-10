@@ -25,6 +25,11 @@ angular.module('chatApp.controllers',[])
       return !!((name.indexOf($scope.query || '') !== -1 || msg.text.indexOf($scope.query || '') !== -1));
     };
 
+    $scope.mind = function(){
+      $scope.new_msg = 'http://i.imgur.com/sg017lt.gif';
+      $scope.talk();
+    };
+
     $scope.toggleSearch = function(){
 
       if ($scope.searchToggle) {

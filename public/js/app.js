@@ -4,7 +4,7 @@ angular.module('chatApp', [
   'ngRoute',
   // 'chatApp.filters',
   'chatApp.services',
-  // 'chatApp.directives',
+  'chatApp.directives',
   'chatApp.controllers'
   ])
   .config(function($routeProvider){
