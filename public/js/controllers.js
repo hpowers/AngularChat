@@ -26,7 +26,7 @@ angular.module('chatApp.controllers',[])
     };
 
     $scope.mind = function(){
-      $scope.new_msg = 'http://i.imgur.com/sg017lt.gif';
+      $scope.new_msg = 'http://i.imgur.com/SdP4oYu.gif';
       $scope.talk();
     };
 
