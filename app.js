@@ -33,12 +33,15 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
+// startup server with socket.io support
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+// keep track of active users
 var users = {};
 
+// when a new socket is instantiated
 io.sockets.on('connection', function (socket) {
 
   // add user to list
@@ -59,7 +62,7 @@ io.sockets.on('connection', function (socket) {
     }
   });
 
-  // listen for chat & rebroadcast w/ ID
+  // listen for chat & rebroadcast w/ ID & timestamp
   socket.on('chat', function(data) {
     // get a timestamp
     var date = new Date().getTime();

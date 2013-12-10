@@ -7,7 +7,6 @@ html, body, .holder{
   .col {
     background: #fff;
     height: 100%;
-    /*padding-top: 20px;*/
   }
 
 /* Sidebar - room list / username / etc... */
@@ -18,22 +17,38 @@ html, body, .holder{
     padding-top: 20px;
   }
 
-  .sidebar .username {
+  .sidebar .name {
     position: absolute;
     bottom: 10px;
     width: calc(100% - 30px);
+    /*height: 45px;*/
+  }
+
+  .sidebar .name .form-control {
     height: 45px;
+  }
+
+  .sidebar .name .name-msg {
+    display: block;
+    padding-bottom: 5px;
   }
 
 /* Main - chat window / chat input */
 
   .main .chat {
-    border-left: 1px solid #dfe3e7;
-    border-top: 1px solid #dfe3e7;
     margin-bottom: 45px;
-    /*max-height: 80%;*/
     overflow-y: auto;
     max-height: calc(100% - 110px);
+  }
+
+  .main .search-input {
+    position: relative;
+  }
+
+  .main .search-input button {
+    position: absolute;
+    right: 2px;
+    top: 2px;
   }
 
   .main .search-bar {
@@ -46,12 +61,8 @@ html, body, .holder{
     padding: 5px 15px;
   }
 
-  .main .chat li {
-    border: 1px solid #dfe3e7;
-  }
-
   .main .chat li:nth-child(2n) {
-    background: #f0f1f4;
+    background: #f7f5fa;
   }
 
   .main .chat .name {
@@ -59,14 +70,8 @@ html, body, .holder{
     text-align: right;
   }
 
-  .main .chat .msg {
-    /*border-bottom: 1px solid #dfe3e7;*/
-  }
-
   .main .chat .date {
     text-align: right;
-    /*border-bottom: 1px solid #dfe3e7;*/
-    /*border-right:  1px solid #dfe3e7;*/
     color: #bbb;
     text-transform: uppercase;
   }
