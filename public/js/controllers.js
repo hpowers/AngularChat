@@ -8,21 +8,12 @@ angular.module('chatApp.controllers',[])
     $scope.users = {};
     $scope.nameMsg = 'What is your name?';
 
-    // $scope.$watch('name', function(){
-    //   console.log('watching...');
-    //   if ($scope.name === 'Anonymous Coward') {
-    //     $scope.nameMsg = 'What is your name?';
-    //   } else {
-    //     $scope.nameMsg = '';
-    //   }
-    // });
-
     // redefine search because names aren't on messages
     $scope.search = function (msg) {
       // figure out the name
-      var name = $scope.users[msg.id] || 'deprecated';
+      var name = ($scope.users[msg.id] || 'deprecated').toLowerCase();
       // chheck the name and the text for matches
-      return !!((name.indexOf($scope.query || '') !== -1 || msg.text.indexOf($scope.query || '') !== -1));
+      return !!((name.indexOf(($scope.query || '').toLowerCase()) !== -1 || msg.text.toLowerCase().indexOf(($scope.query || '').toLowerCase()) !== -1));
     };
 
     $scope.mind = function(){
@@ -116,16 +107,18 @@ angular.module('chatApp.controllers',[])
     // send a message
     $scope.talk = function(){
 
+      $scope.new_msg = $scope.new_msg || Insult();
+
       // broadcast
       socket.emit('chat', {
-        text: $scope.new_msg || Insult()
+        text: $scope.new_msg
       });
 
       // local echo
       $scope.chat.push({
         id: $scope.id,
         date: new Date().getTime(),
-        text: $scope.new_msg || Insult()
+        text: $scope.new_msg
       });
 
       // hack to scroll down chat window

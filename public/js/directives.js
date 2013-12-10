@@ -25,7 +25,7 @@ angular.module('chatApp.directives',[])
         // try to extract an image
         var imgUrl = scope.msg.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]).(?:jpg|gif|png)/gi);
 
-        console.log('imgUrl', imgUrl);
+        // console.log('imgUrl', imgUrl);
 
         // if we found one, replace content with message
         if (imgUrl) {
