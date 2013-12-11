@@ -3,7 +3,7 @@
 /* Directives */
 
 angular.module('chatApp.directives',[])
-  // format a chat msg to be either text or an embedded image
+  // format a chat msg to be either text or inline image
   .directive('formatMsg', function(){
     return {
       restrict: 'E',

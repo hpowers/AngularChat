@@ -194,8 +194,8 @@ angular.module('chatApp.services',[])
 
     return function(){
       var msg = 'I am a ' + part1[Math.floor(Math.random() * part1.length)];
-      msg += ' ' + part2[Math.floor(Math.random() * part1.length)];
-      msg += ' ' + part3[Math.floor(Math.random() * part1.length)] + '.';
+      msg += ' ' + part2[Math.floor(Math.random() * part2.length)];
+      msg += ' ' + part3[Math.floor(Math.random() * part3.length)] + '.';
 
       return msg;
     };
