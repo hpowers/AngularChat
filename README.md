@@ -2,7 +2,9 @@
 
 v 0.1 - some basic features
 
-The basic features are working.  Now it's time to clean it up and add tests.  There are a number of hacks that need to be refactored to be more angulary.
+The basic features are working.  Now it's time to clean it up and add tests.
+
+App organization based on [https://github.com/angular/angular-seed](https://github.com/angular/angular-seed)
 
 You should be able to run it locally with
 * npm i

@@ -1,64 +1,87 @@
 <div class="col sidebar col-xs-2">
 
+  <!-- Room List - feature forthcoming -->
   <ul class="list-unstyled room-list">
+
     <li>
       <a href="" ng-click="congratulations()">
         <span class="glyphicon glyphicon-home"></span> Main
       </a>
     </li>
-  </ul>
 
+  </ul>
+  <!-- END Room List -->
+
+  <!-- ## Name -->
   <div class="name">
 
-    <span class="name-msg">{{nameMsg}}</span>
+    <span class="name-msg" ng-hide="setName.$valid">What is your name?</span>
+    <form name="setName">
+      <input type="text" class="form-control input-sm" ng-model="name" ng-pattern="namePtn" required>
+    </form>
 
-    <input type="text" class="form-control input-sm" ng-model="name">
 
   </div>
+  <!-- END NAME -->
 
 </div>
 
 <div class="col main col-xs-8">
 
+  <!-- Search -->
   <div class="form-group search-bar clearfix" ng-show="chat.length">
 
-    <button class="btn btn-default btn-sm pull-right" ng-hide="searchToggle" ng-click="toggleSearch()">
+    <button class="btn btn-default btn-sm pull-right" ng-hide="searchToggle" ng-click="searchToggle = !searchToggle">
       <span class="glyphicon glyphicon-search"></span>
     </button>
 
     <div class="search-input" ng-show="searchToggle">
-
-      <button class="btn btn-default btn-sm pull-right" ng-click="toggleSearch()">
+      <button class="btn btn-default btn-sm pull-right" ng-click="searchToggle = !searchToggle; query=''">
         <span class="glyphicon glyphicon-remove"></span>
       </button>
-
       <input type="search" class="form-control" id="search" placeholder="search" ng-model="query">
-
     </div>
 
   </div>
+  <!-- END SEARCH -->
 
-  <ul class="list-unstyled chat">
+  <!-- Chat Display -->
+  <ul class="list-unstyled chat" id="chat-display">
+
     <li ng-repeat="msg in chat | limitTo:-300 | filter: search">
+
       <span class="col-xs-2 name">{{users[msg.id] || 'deprecated'}}</span>
+
       <span class="col-xs-8 msg">
         <format-msg msg="msg.text"></format-msg>
       </span>
-      <span class="col-xs-2 date">{{msg.date | date:'h:mm' }}</span>
-    </li>
-  </ul>
 
+      <span class="col-xs-2 date">{{msg.date | date:'h:mm' }}</span>
+
+    </li>
+
+  </ul>
+  <!-- END Chat Display -->
+
+  <!-- Chat Input -->
   <form ng-submit="talk()" ng-show="id">
+
     <div class="input-group chat-input">
-      <input type="text" class="form-control" id="chat" ng-model="new_msg" autofocus="autofocus" placeholder="Say something or paste a link to a pic">
+
+      <input type="text" class="form-control" ng-model="new_msg" autofocus="autofocus" placeholder="Say something or paste a link to a pic">
+
       <span class="input-group-addon">
         <button class="btn btn-primary btn-sm">SEND</button>
       </span>
+
     </div>
+
   </form>
+  <!-- END Chat Input -->
 
 </div>
 
+<!-- Users List -->
 <div class="col users col-xs-2">
 
   <h3>{{userCount}}</h3>
@@ -68,3 +91,4 @@
   </ul>
 
 </div>
+<!-- END Users List

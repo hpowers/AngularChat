@@ -4,7 +4,7 @@
 
 angular.module('chatApp.services',[])
 
-  .factory('Socket', function ($rootScope) {
+  .factory('socket', function ($rootScope) {
 
     // I stole this factory from
     // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
@@ -31,7 +31,7 @@ angular.module('chatApp.services',[])
       }
     };
   })
-  .factory('Insult', function(){
+  .factory('insult', function(){
 
     // words stolen from
     // http://everything2.com/title/random+insult+generator
